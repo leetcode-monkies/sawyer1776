@@ -3,54 +3,43 @@
  * @return {number[][]}
  */
 var threeSum = function (nums) {
-    let result = [];
-    let tmp = {}
-    let hash = {
+    let results = [];
+    const len = nums.length;
+    nums.sort((a, b) => a - b)
 
-    };
-
-    const compare = (a, b) => {
-     return a-b
-    }
-    nums = nums.sort(compare)
-
-    for (let i = 0; i < nums.length; i++) {
-
-        if (hash[nums[i]] !== undefined) {
-            hash[nums[i]]++;
-        } else {
-            hash[nums[i]] = 1;
+    for (let a = 0; a < len; a++) {
+        if (nums[a] > 0) {
+            break
         }
-    }
-    let prev;
-
-    for (let root = 0; root < nums.length; root++) {
-        const x = nums[root];
-        if (x === prev) {
-            continue
+        if (a > 0 && nums[a] === nums[a - 1]) {
+            continue;
         }
-        prev = x;
-        // console.log('Hash is', hash);
-        for (let sec = root + 1; sec < nums.length; sec++) {
-            hash[x + ''] = hash[x + ''] - 1;
-            let target = 0 - x;
-            const y = nums[sec];
-            hash[y + '']--
-            target = target - y;
-            // console.log('new tgt', target)
-            if (hash[target + ''] > 0) {
-                let newAnswer = [x,y,target];
-                newAnswer.sort(compare);
-                tmp[newAnswer] = newAnswer;
+        let b = a + 1;
+        let c = len - 1;
+        while (b < c) {
+            current = nums[a] + nums[b] + nums[c]
+            if (current > 0) {
+                c--;
+            } else if (current < 0) {
+                b++;
             }
-            hash[y + '']++;
+            else if (current === 0) {
+                let newResult = [nums[a], nums[b], nums[c]];
+                results.push(newResult)
+                lastB = nums[b];
+                lastC = nums[c];
+                while (b < c && nums[b] === lastB) {
+                    b++;
+                }
+                while (b < c && nums[c] === lastC) {
+                    c--;
+                }
+            }
+
         }
 
     }
-    for(answer in tmp){
-        result.push(tmp[answer]);
-    }
 
-    return result;
+    return results;
 
 };
